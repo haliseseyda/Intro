@@ -1,4 +1,6 @@
-﻿using Intro.Entities;
+﻿using Intro.DataAccess.Abstracts;
+using Intro.DataAccess.Concretes;
+using Intro.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,38 +11,39 @@ namespace Intro.Business;
 
 public class CourseManager  //operasyon tutucu sınıflar
 {
-    Course[] courses = new Course[3];  //global scorp
+    /*Course[] courses = new Course[3];  //global scorp
     //contructor --> yapıcı blok
     public CourseManager()
     {
-        Course course1 = new Course();
-        course1.Id = 1;
-        course1.Name = "C#";
-        course1.Description = ".NET 8 vs...";
-        course1.Price = 0;
-
-        Course course2 = new Course();
-        course2.Id = 2;
-        course2.Name = "JAVA";
-        course2.Description = "JAVA 17...";
-        course2.Price = 10;
-
-        Course course3 = new Course();
-        course3.Id = 3;
-        course3.Name = "Python";
-        course3.Description = "Python 3.12...";
-        course3.Price = 20;
 
         //courses = {course1,course2,course3};
         courses[0] =  course1;
         courses[1] =  course2;
         courses[2] =  course3;
 
+    }*/
+
+
+    //dependency injection
+    private readonly ICourseDal _courseDal;   //Doğru olan bu
+
+    /*public CourseManager(CourseDal courseDal)
+    {
+        _courseDal = courseDal;
+    }*/
+
+    public CourseManager(ICourseDal courseDal)
+    {
+        _courseDal = courseDal;
     }
 
-    public Course[] GetAll() //void döndürmez
+    public List<Course> GetAll() //void döndürmez
     {
-        return courses;
+        //business rules iş kuralları
+
+        //CourseDal courseDal = new CourseDal();       // Doğru değil
+
+        return _courseDal.GetAll();
         //veri kaynağından çekilir
         //Console.WriteLine("Kurslar listelendi");
     }
